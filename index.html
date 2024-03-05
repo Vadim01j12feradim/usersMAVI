@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Contact us Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="./style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+      <div class="text">
+         Login
+      </div>
+      <form action="#">
+         <div class="form-row">
+            <div class="row input-data">
+               <input type="text" id="username" required>
+               <div class="underline"></div>
+               <label for="">Nombre de usuario</label>
+            </div>
+            
+         </div>
+         <div class="form-row">
+            <div class="row input-data">
+               <input type="password" id="pass" required>
+               <div class="underline"></div>
+               <label for="">Contrasena</label>
+            </div>
+         </div>
+
+         <div class="form-row submit-btn">
+            <div class="input-data">
+               <div class="inner"></div>
+               <input type="button" value="Ingresar" id="btnLog">
+            </div>
+         </div>
+      </form>
+      </div>
+<!-- partial -->
+  
+</body>
+<script>
+   $("#btnLog").on('click', function() {
+      var formData = new FormData();
+      formData.append('method', "logIn");
+      formData.append('username', $('#username').val());
+      formData.append('pass', $('#pass').val());
+
+      $.ajax({
+                url: 'CONTROLLERS/userLogController.php',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    switch (response.code) {
+                        case 200:
+                           if (response.data == "ok") {
+                              window.location.href = "dashboard/index.php";
+                           }
+                            
+                            break;
+                        default:
+                            break;
+                    }
+                    console.log("Response: ",response);
+                },
+                error: function(xhr, status, error){
+                    console.error(xhr.responseText);
+                }
+            })
+
+
+
+})
+
+</script>
+</html>
