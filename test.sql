@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 05, 2024 at 01:54 PM
+-- Generation Time: Mar 05, 2024 at 02:42 PM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -41,7 +41,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `active`, `name`, `apellido`, `domicilio`, `correo`) VALUES
-(1, 1, 'Helena', 'medraino', 'morelos 14', 'email123@gmail.com');
+(1, 1, 'Ana', 'medraino', 'morelos 15', 'email123222@gmail.com'),
+(10, 1, 'Izmael', 'Mora', 'Morelos 12', 'semesytre@gmail.com'),
+(11, 0, 'Izmael', 'Guzman', 'Morelos 12', 'semesytrqe@gmail.com'),
+(12, 1, 'juan', 'Morelos', 'Mama', 'ssss@gmail.com'),
+(13, 1, 'Mario', 'Murguia', 'node', 'emailo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -87,7 +91,7 @@ ALTER TABLE `userLog`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `userLog`
