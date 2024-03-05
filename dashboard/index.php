@@ -107,7 +107,7 @@ require 'sessionValidation.php';
 		  </form>
 		</div>
 		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelSave">Cancelar</button>
 		  <button type="button" class="btn btn-primary" id="saveChanges">Guardar cambios</button>
 		</div>
 	  </div>
@@ -215,19 +215,24 @@ require 'sessionValidation.php';
 									success: function(response){
 										switch (response.code) {
 											case 200:
-											var row = $("#"+$('#idUser').val()); 
-											table.cell(row, 1).data($('#recipient-name').val()); // Assuming apellido is in the third column (index 2)
-											table.cell(row, 2).data($('#recipient-apellido').val()); // Assuming domicilio is in the fourth column (index 3)
-											table.cell(row, 3).data($('#recipient-domicilio').val()); // Assuming correo is in the fifth column (index 4)
-											table.cell(row, 4).data($('#recipient-correo').val()); // Assuming correo is in the fifth column (index 4)
 
-											table.draw();
+												if (response.sms == "ok") {
+													var row = $("#"+$('#idUser').val()); 
+													table.cell(row, 1).data($('#recipient-name').val()); // Assuming apellido is in the third column (index 2)
+													table.cell(row, 2).data($('#recipient-apellido').val()); // Assuming domicilio is in the fourth column (index 3)
+													table.cell(row, 3).data($('#recipient-domicilio').val()); // Assuming correo is in the fifth column (index 4)
+													table.cell(row, 4).data($('#recipient-correo').val()); // Assuming correo is in the fifth column (index 4)
+	
+													table.draw();
+													$("#cancelSave").click(); 
+
+												}
 
 											break;
 											default:
 												break;
 										}
-										console.log("Response: ",response.code);
+										console.log("Response: ",response);
 									},
 									error: function(xhr, status, error){
 										console.error(xhr.responseText);

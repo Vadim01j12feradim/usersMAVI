@@ -90,7 +90,16 @@ require 'dashboard/sessionValidation.php';
                correo: correo
             },
             success: function(response) {
-               console.log(response);
+               switch(response.code){
+                  case 200:
+                     if(response.data == "ok"){
+                        $('#name').val("")
+                        $('#apellido').val("")
+                        $('#domicilio').val("")
+                        $('#correo').val("")
+                     }
+                  break;
+               }
             },
             error: function(xhr, status, error) {
                console.error(error);

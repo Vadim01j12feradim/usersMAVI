@@ -11,7 +11,17 @@ if (isset($_POST['method'])) {
             $user['apellido'] = $_POST['apellido'];
             $user['domicilio'] = $_POST['domicilio'];
             $user['correo'] = $_POST['correo'];
-            $db->insertUser($user);
+            $data = $db->insertUser($user);
+            $code = 200;
+            $data  = array('code' => $code,
+                'data' => $data,
+            );
+    
+            $response = json_encode($data);
+            header('Content-Type: application/json');
+            echo $response;
+            break;
+
             break;
 
         case 'updateUser':
@@ -24,12 +34,13 @@ if (isset($_POST['method'])) {
                 $user['domicilio'] = $_POST['domicilio'];
                 $user['correo'] = $_POST['correo'];
 
-                $db->updateUser($user);
+                $data = $db->updateUser($user);
                 }catch(Exception $e){
                     $code  = 500;
                 }
                 
-                $data  = array('code' => $code);
+                $data  = array('code' => $code,
+                'sms' => $data);
     
                 $response = json_encode($data);
                 header('Content-Type: application/json');
