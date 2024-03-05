@@ -23,12 +23,18 @@
         }
         function updateUser($user){
             require '../DB/connection.php';
-            $sql = "UPDATE user 
-            SET name = :name, 
-                apellido = :apellido, 
-                domicilio = :domicilio, 
-                correo = :correo 
-            WHERE id = :id;
+            $sql = "
+                UPDATE user AS u
+                    JOIN (
+                        SELECT COUNT(*) AS count_records
+                        FROM user
+                        WHERE correo = :correo AND id != :id
+                    ) AS subquery ON subquery.count_records = 0
+                    SET u.name = :name, 
+                        u.apellido = :apellido, 
+                        u.domicilio = :domicilio, 
+                        u.correo = :correo 
+                    WHERE u.id = :id;
             ";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':name', $user['name']);
@@ -37,8 +43,12 @@
             $stmt->bindParam(':correo', $user['correo']);
             $stmt->bindParam(':id', $user['id']);
             $stmt->execute();
+            $rowCount = $stmt->rowCount();
             $pdo = null;
-            return "ok";
+            if ($rowCount >=1) {
+                return "ok";
+            }
+            return "not";
         }
 
         
