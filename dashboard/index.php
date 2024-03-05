@@ -122,7 +122,9 @@ require 'sessionValidation.php';
 
   <script>
 			$(document).ready(function() {
+
 				let table;
+				
 				$.ajax({
 			url: '../CONTROLLERS/userController.php',
 			method: 'POST',
@@ -144,18 +146,19 @@ require 'sessionValidation.php';
                         '<td>'+item.domicilio+'</td>' +
                         '<td>'+item.correo+'</td>' +
                         '<td>' +
-								'<input type="button" id="E'+item.id+'" class="btn btn-success" value="Editar" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"> ' +
+								'<input type="button" '+ 
+								'class="btn btn-success editar editRow" value="Editar" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"> ' +
 								'<input type="button" id="D'+item.id+'" class="btn btn-danger" value="Eliminar">' +
 							'</td>' +
 						'</tr>');
 						$('#tbodyId').append(tableRow);
-						$("#E"+item.id).on('click', function(event) {
-							$("#recipient-name").val(item.name)
-							$("#recipient-apellido").val(item.apellido)
-							$("#recipient-domicilio").val(item.domicilio)
-							$("#recipient-correo").val(item.correo)
-							$("#idUser").val(item.id)
-						})
+							// $("#E"+item.id).on('click', function(event) {
+							// 	$("#recipient-name").val(item.name)
+							// 	$("#recipient-apellido").val(item.apellido)
+							// 	$("#recipient-domicilio").val(item.domicilio)
+							// 	$("#recipient-correo").val(item.correo)
+							// 	$("#idUser").val(item.id)
+							// })
 
 							$("#D"+item.id).on('click', function(event) {
 								$.ajax({
@@ -184,6 +187,19 @@ require 'sessionValidation.php';
 						});
 						table = new DataTable('#tableId');
 
+						$(".editRow").on('click', function(event) {
+							var row = $(this).closest('tr');
+							var th = row.find('th');
+							var tds = row.find('td');
+							console.log(tds.eq(0).text());
+
+							$("#recipient-name").val(tds.eq(0).text());
+							$("#recipient-apellido").val(tds.eq(1).text());
+							$("#recipient-domicilio").val(tds.eq(2).text());
+							$("#recipient-correo").val(tds.eq(3).text());
+							$("#idUser").val(th.text());
+						})
+
                     break;
                             
                     default:
@@ -197,6 +213,8 @@ require 'sessionValidation.php';
 		});
 
 		
+		
+
 
 		$("#saveChanges").on('click', function(event) {
 							console.log("pressed");
